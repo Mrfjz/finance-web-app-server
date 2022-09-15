@@ -1,4 +1,4 @@
-package mrfjz.application.financewebappserver.enums;
+package mrfjz.application.financewebappserver.models;
 
 public enum TransactionSide {
     DEPOSIT, WITHDRAW

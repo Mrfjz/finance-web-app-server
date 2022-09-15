@@ -1,12 +1,16 @@
 package mrfjz.application.financewebappserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Data
+@ToString(exclude = {"instrument"})
+@JsonIgnoreProperties(value = {"instrument"})
 @Table(name = "quotes")
 public class Quote extends BaseEntity{
     @Column(name = "price", nullable = false)

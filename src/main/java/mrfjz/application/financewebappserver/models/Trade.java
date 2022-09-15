@@ -1,7 +1,6 @@
 package mrfjz.application.financewebappserver.models;
 
 import lombok.Data;
-import mrfjz.application.financewebappserver.enums.TradeSide;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;

@@ -1,9 +1,9 @@
 package mrfjz.application.financewebappserver.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import mrfjz.application.financewebappserver.enums.InstrumentType;
-import mrfjz.application.financewebappserver.enums.TradeSide;
-import mrfjz.application.financewebappserver.enums.TransactionSide;
+import mrfjz.application.financewebappserver.models.InstrumentType;
+import mrfjz.application.financewebappserver.models.TradeSide;
+import mrfjz.application.financewebappserver.models.TransactionSide;
 import mrfjz.application.financewebappserver.models.*;
 import mrfjz.application.financewebappserver.repositories.*;
 import org.springframework.context.ApplicationListener;

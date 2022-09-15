@@ -1,7 +1,6 @@
 package mrfjz.application.financewebappserver.models;
 
 import lombok.*;
-import mrfjz.application.financewebappserver.enums.TransactionSide;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
