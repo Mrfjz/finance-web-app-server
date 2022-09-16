@@ -1,10 +1,11 @@
 package mrfjz.application.financewebappserver.services;
 
 import mrfjz.application.financewebappserver.models.Instrument;
+import mrfjz.application.financewebappserver.models.InstrumentSummary;
 
 import java.util.Set;
 
 public interface InstrumentService {
     Set<Instrument> getInstruments();
-    Instrument getInstrument(String symbol);
+    InstrumentSummary getInstrumentSummary(String symbol);
 }

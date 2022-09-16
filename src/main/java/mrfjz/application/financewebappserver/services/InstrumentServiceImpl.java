@@ -25,11 +25,12 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public Instrument getInstrument(String symbol) {
+    public InstrumentSummary getInstrumentSummary(String symbol) {
         Optional<Instrument> instrument = instrumentRepository.findBySymbol(symbol);
         if(instrument.isPresent()){
             InstrumentSummary instrumentSummary = new InstrumentSummary(instrument.get());
+            return instrumentSummary;
         }
-        return instrument.orElse(null);
+        return null;
     }
 }

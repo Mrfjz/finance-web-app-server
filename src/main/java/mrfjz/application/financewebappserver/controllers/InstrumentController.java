@@ -1,6 +1,7 @@
 package mrfjz.application.financewebappserver.controllers;
 
 import mrfjz.application.financewebappserver.models.Instrument;
+import mrfjz.application.financewebappserver.models.InstrumentSummary;
 import mrfjz.application.financewebappserver.services.InstrumentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ public class InstrumentController {
     }
 
     @GetMapping("/{symbol}")
-    public Instrument getInstrument(@PathVariable String symbol){
-        return instrumentService.getInstrument(symbol);
+    public InstrumentSummary getInstrument(@PathVariable String symbol){
+        return instrumentService.getInstrumentSummary(symbol);
     }
 }

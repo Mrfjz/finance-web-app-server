@@ -73,10 +73,17 @@ public class DbBootstrap implements ApplicationListener<ContextRefreshedEvent> {
         trade.setInstrument(instrument);
         tradeRepository.save(trade);
 
-        Quote quote = new Quote();
-        quote.setInstrument(instrument);
-        quote.setPrice(1);
-        quote.setTimestamp(Instant.parse("2019-10-01T08:25:24.00Z"));
-        quoteRepository.save(quote);
+        Quote quote1 = new Quote();
+        quote1.setInstrument(instrument);
+        quote1.setPrice(1);
+        quote1.setTimestamp(Instant.parse("2019-10-01T08:25:24.00Z"));
+        quoteRepository.save(quote1);
+
+        Quote quote2 = new Quote();
+        quote2.setInstrument(instrument);
+        quote2.setPrice(2);
+        quote2.setTimestamp(Instant.parse("2019-10-02T08:25:24.00Z"));
+        quoteRepository.save(quote2);
+
     }
 }
