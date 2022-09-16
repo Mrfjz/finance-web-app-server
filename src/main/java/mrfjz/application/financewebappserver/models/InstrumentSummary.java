@@ -33,7 +33,7 @@ public class InstrumentSummary implements Serializable {
         lot = instrument.getLot();
         iconUrl = instrument.getIconUrl();
 
-        instrument.getQuotes().stream().sorted().iterator().forEachRemaining(quotes::add);
+        instrument.getQuotes().iterator().forEachRemaining(quotes::add);
         quoteFilter = new QuoteFilter(quotes);
 
         lastPrice = calLastPrice();

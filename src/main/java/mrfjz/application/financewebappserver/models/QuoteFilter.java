@@ -9,7 +9,7 @@ public class QuoteFilter {
     private final List<Quote> quotes;
 
     public QuoteFilter(List<Quote> quotes) {
-        this.quotes = quotes;
+        this.quotes = quotes.stream().sorted().collect(Collectors.toList());
     }
 
     private static Instant getQuoteDate(Quote quote) {
@@ -40,8 +40,8 @@ public class QuoteFilter {
     }
 
     /**
-     * Previous day refer to the market open day, i.e. if last quote is Monday,
-     * previous day will be Friday but not Sunday.
+     * Previous day refer to the previous market open day, i.e. if last quote is Monday,
+     * previous day will be Friday instead of Sunday.
      *
      * @return
      */
@@ -61,7 +61,7 @@ public class QuoteFilter {
     }
 
     /**
-     * quotes starting from 52 weeks ago.
+     * quotes within 52 weeks.
      *
      * @return
      */
