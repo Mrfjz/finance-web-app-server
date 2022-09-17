@@ -2,6 +2,7 @@ package mrfjz.application.financewebappserver.services;
 
 import mrfjz.application.financewebappserver.models.Instrument;
 import mrfjz.application.financewebappserver.models.InstrumentSummary;
+import mrfjz.application.financewebappserver.models.InstrumentType;
 import mrfjz.application.financewebappserver.repositories.InstrumentRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,15 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public Set<InstrumentSummary> getInstrumentsSummary() {
-        var instruments = getInstruments();
+    public Set<InstrumentSummary> getInstrumentsSummary(String type) {
+        InstrumentType instrumentType;
+        try {
+            instrumentType = InstrumentType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException exception) {
+            return null;
+        }
+        Set<Instrument> instruments = new HashSet<>();
+        instrumentRepository.findAllByType(instrumentType).iterator().forEachRemaining(instruments::add);
         Set<InstrumentSummary> instrumentSummaries = new HashSet<>();
 //        Exclude quotes property
         instruments.stream().map(InstrumentSummary::new).peek(InstrumentSummary::clearQuotes).forEach(instrumentSummaries::add);

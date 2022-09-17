@@ -20,6 +20,7 @@ public class InstrumentSummary implements Serializable {
     private String iconUrl;
     private Float lastPrice;
     private Float priceChange;
+    private Float priceChangePercentage;
     private Float intraDayMinPrice;
     private Float intraDayMaxPrice;
     private Float intraYearMinPrice;
@@ -37,7 +38,11 @@ public class InstrumentSummary implements Serializable {
         quoteFilter = new QuoteFilter(quotes);
 
         lastPrice = calLastPrice();
-        priceChange = calPriceChange();
+        var prevPrice = calPrevPrice();
+        if (lastPrice != null && prevPrice != null) {
+            priceChange = lastPrice - prevPrice;
+            priceChangePercentage = priceChange / prevPrice;
+        }
         var intraDayPriceRange = calIntraDayPriceRange();
         if (intraDayPriceRange != null) {
             intraDayMinPrice = intraDayPriceRange[0];
@@ -58,14 +63,14 @@ public class InstrumentSummary implements Serializable {
         return null;
     }
 
-    private Float calPriceChange() {
+    private Float calPrevPrice() {
         var lastQuote = quoteFilter.getLastQuote();
         var prevDayQuotes = quoteFilter.getPrevDayQuotes();
         if (lastQuote == null || prevDayQuotes == null || prevDayQuotes.isEmpty())
             return null;
 
         var prevDayQuote = prevDayQuotes.get(prevDayQuotes.size() - 1);
-        return lastQuote.getPrice() - prevDayQuote.getPrice();
+        return prevDayQuote.getPrice();
     }
 
     private Float[] calIntraDayPriceRange() {

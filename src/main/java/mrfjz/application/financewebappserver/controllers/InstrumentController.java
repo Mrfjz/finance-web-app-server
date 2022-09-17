@@ -3,10 +3,7 @@ package mrfjz.application.financewebappserver.controllers;
 import mrfjz.application.financewebappserver.models.Instrument;
 import mrfjz.application.financewebappserver.models.InstrumentSummary;
 import mrfjz.application.financewebappserver.services.InstrumentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -30,7 +27,7 @@ public class InstrumentController {
     }
 
     @GetMapping("/summary")
-    public Set<InstrumentSummary> getInstrumentsSummary() {
-        return instrumentService.getInstrumentsSummary();
+    public Set<InstrumentSummary> getInstrumentsSummary(@RequestParam(required = false, defaultValue = "") String type) {
+        return instrumentService.getInstrumentsSummary(type);
     }
 }

@@ -10,5 +10,5 @@ public interface InstrumentService {
 
     InstrumentSummary getInstrumentSummary(String symbol);
 
-    Set<InstrumentSummary> getInstrumentsSummary();
+    Set<InstrumentSummary> getInstrumentsSummary(String type);
 }
