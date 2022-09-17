@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -28,7 +25,12 @@ public class InstrumentController {
     }
 
     @GetMapping("/{symbol}")
-    public InstrumentSummary getInstrument(@PathVariable String symbol){
+    public InstrumentSummary getInstrumentSummary(@PathVariable String symbol) {
         return instrumentService.getInstrumentSummary(symbol);
+    }
+
+    @GetMapping("/summary")
+    public Set<InstrumentSummary> getInstrumentsSummary() {
+        return instrumentService.getInstrumentsSummary();
     }
 }

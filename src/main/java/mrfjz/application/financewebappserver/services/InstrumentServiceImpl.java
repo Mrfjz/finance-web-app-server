@@ -19,18 +19,24 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public Set<Instrument> getInstruments() {
-        Set<Instrument> instrumentSet = new HashSet<>();
-        instrumentRepository.findAll().iterator().forEachRemaining(instrumentSet::add);
-        return instrumentSet;
+        Set<Instrument> instruments = new HashSet<>();
+        instrumentRepository.findAll().iterator().forEachRemaining(instruments::add);
+        return instruments;
     }
 
     @Override
     public InstrumentSummary getInstrumentSummary(String symbol) {
         Optional<Instrument> instrument = instrumentRepository.findBySymbol(symbol);
-        if(instrument.isPresent()){
-            InstrumentSummary instrumentSummary = new InstrumentSummary(instrument.get());
-            return instrumentSummary;
-        }
-        return null;
+        return instrument.map(InstrumentSummary::new).orElse(null);
+    }
+
+    @Override
+    public Set<InstrumentSummary> getInstrumentsSummary() {
+        var instruments = getInstruments();
+        Set<InstrumentSummary> instrumentSummaries = new HashSet<>();
+//        Exclude quotes property
+        instruments.stream().map(InstrumentSummary::new).peek(InstrumentSummary::clearQuotes).forEach(instrumentSummaries::add);
+
+        return instrumentSummaries;
     }
 }

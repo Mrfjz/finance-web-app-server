@@ -92,4 +92,8 @@ public class InstrumentSummary implements Serializable {
         }
         return new Float[]{minPrice, maxPrice};
     }
+
+    public void clearQuotes() {
+        quotes.clear();
+    }
 }

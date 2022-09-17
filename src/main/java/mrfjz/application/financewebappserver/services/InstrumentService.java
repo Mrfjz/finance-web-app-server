@@ -7,5 +7,8 @@ import java.util.Set;
 
 public interface InstrumentService {
     Set<Instrument> getInstruments();
+
     InstrumentSummary getInstrumentSummary(String symbol);
+
+    Set<InstrumentSummary> getInstrumentsSummary();
 }
