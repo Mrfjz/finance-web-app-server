@@ -1,8 +1,6 @@
 package mrfjz.application.financewebappserver.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import mrfjz.application.financewebappserver.models.InstrumentType;
-import mrfjz.application.financewebappserver.models.TradeSide;
 import mrfjz.application.financewebappserver.models.TransactionSide;
 import mrfjz.application.financewebappserver.models.*;
 import mrfjz.application.financewebappserver.repositories.*;
@@ -21,69 +19,39 @@ public class DbBootstrap implements ApplicationListener<ContextRefreshedEvent> {
     private final InstrumentRepository instrumentRepository;
     private final TradeRepository tradeRepository;
     private final QuoteRepository quoteRepository;
+    private final TransactionRepository transactionRepository;
 
-    public DbBootstrap(UserRepository userRepository, AccountRepository accountRepository, PositionRepository positionRepository, InstrumentRepository instrumentRepository, TradeRepository tradeRepository, QuoteRepository quoteRepository) {
+
+    public DbBootstrap(UserRepository userRepository, AccountRepository accountRepository, PositionRepository positionRepository, InstrumentRepository instrumentRepository, TradeRepository tradeRepository, QuoteRepository quoteRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
         this.positionRepository = positionRepository;
         this.instrumentRepository = instrumentRepository;
         this.tradeRepository = tradeRepository;
         this.quoteRepository = quoteRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        User user = new User();
-        user.setFirstName("Adam");
-        user.setLastName("Savage");
-        user.setEmail("bob123@hotmail.com");
-        user.setPassword("123456");
-
-        Account account = new Account();
+        User user = new User("Adam", "Savage", "bob123@hotmail.com", "123456");
+        Account account = new Account(user);
         user.setAccount(account);
-        account.setUser(user);
-
-        Transaction transaction = new Transaction();
-        transaction.setSide(TransactionSide.DEPOSIT);
-        transaction.setAmount(1000);
-        account.getTransactions().add(transaction);
-        transaction.setAccount(account);
-
         userRepository.save(user);
 
-        Instrument instrument = new Instrument();
-        instrument.setSymbol("AAPL");
-        instrument.setName("Apple");
-        instrument.setType(InstrumentType.STOCK);
-        instrument.setLot(1);
-        instrument.setPrecision(2);
+        Transaction transaction = new Transaction(1000, TransactionSide.DEPOSIT, account);
+        transactionRepository.save(transaction);
+
+        Instrument instrument = new Instrument("AAPL", "Apple", InstrumentType.STOCK, 1, 2, "");
         instrumentRepository.save(instrument);
 
-        Position position = new Position();
-        position.setQuantity(100);
-        position.setAccount(account);
-        position.setInstrument(instrument);
+        Position position = new Position(100, account, instrument);
         positionRepository.save(position);
 
-        Trade trade = new Trade();
-        trade.setAccount(account);
-        trade.setSide(TradeSide.BUY);
-        trade.setQuantity(100);
-        trade.setPrice(1);
-        trade.setInstrument(instrument);
+        Trade trade = new Trade(1, 100, TradeSide.BUY, account, instrument);
         tradeRepository.save(trade);
 
-        Quote quote1 = new Quote();
-        quote1.setInstrument(instrument);
-        quote1.setPrice(1);
-        quote1.setTimestamp(Instant.parse("2019-10-01T08:25:24.00Z"));
-        quoteRepository.save(quote1);
-
-        Quote quote2 = new Quote();
-        quote2.setInstrument(instrument);
-        quote2.setPrice(2);
-        quote2.setTimestamp(Instant.parse("2019-10-02T08:25:24.00Z"));
-        quoteRepository.save(quote2);
-
+        quoteRepository.save(new Quote(1, Instant.parse("2019-10-01T08:25:24.00Z"), instrument));
+        quoteRepository.save(new Quote(2, Instant.parse("2019-10-02T08:25:24.00Z"), instrument));
     }
 }

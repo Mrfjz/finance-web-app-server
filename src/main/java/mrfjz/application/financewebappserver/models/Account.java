@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"user", "transactions", "positions", "trades"}, callSuper = false)
 @Table(name = "accounts")
 public class Account extends BaseEntity{
@@ -34,4 +35,8 @@ public class Account extends BaseEntity{
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Trade> trades = new HashSet<>();
+
+    public Account(User user) {
+        this.user = user;
+    }
 }
